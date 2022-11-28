@@ -40,10 +40,10 @@ public class ListFunctionsTest {
 
     @Test
     public void propertyReplicatedLength() {
-        Arbitrary<Integer> ns = Arbitrary.integer().map(Math::abs);
+        Arbitrary<Integer> nonNegativeInt = Arbitrary.integer().map(Math::abs);
         Arbitrary<Character> xs = Arbitrary.of('a', 'b', 'c', 'd' , 'e');
         Property.def("length(replicate(n, x)) == n")
-                .forAll(ns, xs)
+                .forAll(nonNegativeInt, xs)
                 .suchThat((n, x) -> length(replicate(n, x)) == n)
                 .check()
                 .assertIsSatisfied();
